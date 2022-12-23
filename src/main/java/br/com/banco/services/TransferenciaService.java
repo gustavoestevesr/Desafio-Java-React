@@ -40,5 +40,13 @@ public class TransferenciaService {
         return transferenciaRepository.findAll(pageable);
     }
 
+    public List<TransferenciaModel> obterTodasTransferenciasPorContaBancaria(Long id) {
+        return transferenciaRepository.buscarTransferenciasPorContaBancaria(id);
+    }
+
+    public List<TransferenciaModel> obterTodasTransferenciasPorPeriodo(LocalDateTime data_inicio, LocalDateTime data_fim, String nome_operador_transacao) {
+        return transferenciaRepository.buscarTransferenciasPorPeriodo(data_inicio, data_fim, nome_operador_transacao);
+    }
+
     
 }

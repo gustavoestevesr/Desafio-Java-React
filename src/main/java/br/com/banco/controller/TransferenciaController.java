@@ -60,7 +60,22 @@ public class TransferenciaController {
         return ResponseEntity.status(HttpStatus.OK).body(transferenciaModelOptional.get());
     } 
 
-    
+    @GetMapping("/numerocontabancaria/{id_conta}")
+    public ResponseEntity<List<TransferenciaModel>> obterTodasTransferenciasPorContaBancaria(@PathVariable(value = "id_conta") Long id_conta){
+        return ResponseEntity.status(HttpStatus.OK).body(transferenciaService.obterTodasTransferenciasPorContaBancaria(id_conta));
+    }  
+
+    @GetMapping("/periodo/{data_inicio}/{data_fim}/{nome_operador_transacao}")
+    public ResponseEntity<List<TransferenciaModel>> obterTodasTransferenciasPorPeriodo(@PathVariable(value = "data_inicio") String data_inicio, @PathVariable(value = "data_fim") String data_fim, @PathVariable(value = "nome_operador_transacao") String nome_operador_transacao){
+
+        LocalDateTime conv_data_inicio = LocalDateTime.parse(data_inicio,
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+
+        LocalDateTime conv_data_fim = LocalDateTime.parse(data_fim,
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+
+        return ResponseEntity.status(HttpStatus.OK).body(transferenciaService.obterTodasTransferenciasPorPeriodo(conv_data_inicio, conv_data_fim, nome_operador_transacao));
+    } 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> removerTransferenciaPorID(@PathVariable(value = "id") Long id){
