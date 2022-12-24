@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.banco.dto.TransferenciaDto;
-import br.com.banco.models.ContaModel;
-import br.com.banco.services.ContaService;
 import br.com.banco.services.TransferenciaServiceImpl;
 import lombok.Data;
 

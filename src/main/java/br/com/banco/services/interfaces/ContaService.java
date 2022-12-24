@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.banco.dto.TransferenciaDto;
+import br.com.banco.dto.ContaDto;
 
 public interface ContaService {
-    List<TransferenciaDto> obterTransferencias();
-    TransferenciaDto cadastrarTransferencia(TransferenciaDto TransferenciaDto);
-    Optional<TransferenciaDto> obterTransferenciaPorId(Long id);
-    void excluirTransferencia(Long id);
-    TransferenciaDto atualizarTransferencia(Long id, TransferenciaDto novaTransferenciaDto);
+    List<ContaDto> obterContas();
+    ContaDto cadastrarConta(ContaDto ContaDto);
+    Optional<ContaDto> obterContaPorId(Long id);
+    void excluirConta(Long id);
+    ContaDto atualizarConta(Long id, ContaDto novaContaDto);
 }
