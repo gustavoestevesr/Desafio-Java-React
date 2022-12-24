@@ -24,8 +24,7 @@ public interface TransferenciaRepository extends JpaRepository <TransferenciaMod
     
     @Query(value = "SELECT sum(t.valor) FROM transferencia t WHERE t.data_transferencia >= :data_inicio AND t.data_transferencia <= :data_fim AND nome_operador_transacao = :nome_operador_transacao", nativeQuery = true)    
     BigDecimal calcularSaldoTransferenciasPorPeriodo(LocalDateTime data_inicio, LocalDateTime data_fim, String nome_operador_transacao);
-
-    // @Query(value = "SELECT SUM(t.valor) FROM transferencia t", nativeQuery = true)    
+    
     @Query(value = "SELECT SUM(t.valor) FROM transferencia t WHERE nome_operador_transacao = :nome_operador_transacao", nativeQuery = true)    
     BigDecimal calcularSaldoTransferenciasPorNomeOperadorTransacao(String nome_operador_transacao);
 }

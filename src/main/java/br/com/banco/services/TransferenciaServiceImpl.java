@@ -77,9 +77,17 @@ public class TransferenciaServiceImpl implements TransferenciaService {
     public List<TransferenciaDto> obterTransferenciasPorNomeOperadorTransacao(String nome_operador_transacao) {
         List<TransferenciaModel> transferenciasPorNomeOperadorTransacaoModel = transferenciaRepository.buscarTransferenciasPorNomeOperadorTransacao(nome_operador_transacao);
 
-        return transferenciasPorNomeOperadorTransacaoModel.stream()
+        List<TransferenciaDto> transferenciasPorNomeOperadorTransacaoDto =  transferenciasPorNomeOperadorTransacaoModel.stream()
         .map( t -> new ModelMapper().map(t, TransferenciaDto.class))
         .collect(Collectors.toList());
+
+        transferenciasPorNomeOperadorTransacaoDto.stream()
+        .forEach( t -> t.setSaldo_total( calcularSaldoTransferenciasPorNomeOperadorTransacao(nome_operador_transacao) ));
+
+        transferenciasPorNomeOperadorTransacaoDto.stream()
+        .forEach( t -> t.setSaldo_total_periodo( t.getSaldo_total() ));        
+
+        return transferenciasPorNomeOperadorTransacaoDto;
     }
 
     @Override

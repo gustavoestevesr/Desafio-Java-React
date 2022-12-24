@@ -72,21 +72,20 @@ public class TransferenciaController {
         return ResponseEntity.status(HttpStatus.FOUND).body(transferenciaService.obterTodasTransferenciasPorContaBancaria(id_conta));
     }  
 
-    @GetMapping("/nomeoperadortransacao/{nome_operador_transacao}")
+    @GetMapping("/filtro/{nome_operador_transacao}")
     public ResponseEntity<List<TransferenciaDto>> obterTransferenciasPorNomeOperadorTransacao(@PathVariable(value = "nome_operador_transacao") String nome_operador_transacao){
         return ResponseEntity.status(HttpStatus.FOUND).body(transferenciaService.obterTransferenciasPorNomeOperadorTransacao(nome_operador_transacao));
-    }  
+    }
 
-    @GetMapping("/periodo/{data_inicio}/{data_fim}/{nome_operador_transacao}")
-    public ResponseEntity<List<TransferenciaDto>> obterTodasTransferenciasPorPeriodo(@PathVariable(value = "data_inicio") String data_inicio, @PathVariable(value = "data_fim") String data_fim, @PathVariable(value = "nome_operador_transacao") String nome_operador_transacao){
-
+    @GetMapping("/filtro/{nome_operador_transacao}/{data_inicio}/{data_fim}")
+    public ResponseEntity<List<TransferenciaDto>> obterTodasTransferenciasPorPeriodo(@PathVariable(value = "nome_operador_transacao") String nome_operador_transacao, @PathVariable(value = "data_inicio") String data_inicio, @PathVariable(value = "data_fim") String data_fim){
         LocalDateTime conv_data_inicio = LocalDateTime.parse(data_inicio,
         DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
 
         LocalDateTime conv_data_fim = LocalDateTime.parse(data_fim,
         DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));   
-        
-        return ResponseEntity.status(HttpStatus.OK).body(transferenciaService.obterTodasTransferenciasPorPeriodo(conv_data_inicio, conv_data_fim, nome_operador_transacao));
-    }     
+
+        return ResponseEntity.status(HttpStatus.FOUND).body( transferenciaService.obterTodasTransferenciasPorPeriodo(conv_data_inicio, conv_data_fim, nome_operador_transacao) );
+    }       
 
 }
