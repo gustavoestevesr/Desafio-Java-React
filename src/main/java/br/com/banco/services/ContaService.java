@@ -10,15 +10,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.banco.models.ContaModel;
 import br.com.banco.repository.ContaRepository;
+import lombok.Data;
 
+@Data
 @Service
 public class ContaService {
 
     final ContaRepository contaRepository;
-
-    public ContaService(ContaRepository contaRepository){
-        this.contaRepository = contaRepository;
-    }
 
     @Transactional
     public ContaModel save(ContaModel contaModel) {

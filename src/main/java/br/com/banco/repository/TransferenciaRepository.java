@@ -1,5 +1,6 @@
 package br.com.banco.repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,12 +12,20 @@ import br.com.banco.models.TransferenciaModel;
 
 @Repository
 public interface TransferenciaRepository extends JpaRepository <TransferenciaModel, Long>{
-       
-    // SELECT * FROM TRANSFERENCIA  T INNER JOIN CONTA C ON T.CONTA_ID=C.ID_CONTA WHERE C.ID_CONTA  = 1
+           
     @Query("FROM transferencia t INNER JOIN conta c ON t.conta_id=c.id_conta WHERE c.id_conta = :id_conta")
     List<TransferenciaModel> buscarTransferenciasPorContaBancaria(Long id_conta);
 
-    // SELECT * FROM TRANSFERENCIA T INNER JOIN CONTA C ON T.CONTA_ID=C.ID_CONTA  WHERE DATA_TRANSFERENCIA >= '2018-04-01T06:12:04Z'  AND DATA_TRANSFERENCIA <= '2022-04-01T06:12:04Z' AND NOME_OPERADOR_TRANSACAO = 'Beltrano'' 
+    @Query("FROM transferencia t INNER JOIN conta c ON t.conta_id=c.id_conta WHERE nome_operador_transacao = :nome_operador_transacao")
+    List<TransferenciaModel> buscarTransferenciasPorNomeOperadorTransacao(String nome_operador_transacao);
+    
     @Query("FROM transferencia t INNER JOIN conta c ON t.conta_id=c.id_conta WHERE t.data_transferencia >= :data_inicio AND t.data_transferencia <= :data_fim AND nome_operador_transacao = :nome_operador_transacao")
     List<TransferenciaModel> buscarTransferenciasPorPeriodo(LocalDateTime data_inicio, LocalDateTime data_fim, String nome_operador_transacao);
+    
+    @Query(value = "SELECT sum(t.valor) FROM transferencia t WHERE t.data_transferencia >= :data_inicio AND t.data_transferencia <= :data_fim AND nome_operador_transacao = :nome_operador_transacao", nativeQuery = true)    
+    BigDecimal calcularSaldoTransferenciasPorPeriodo(LocalDateTime data_inicio, LocalDateTime data_fim, String nome_operador_transacao);
+
+    // @Query(value = "SELECT SUM(t.valor) FROM transferencia t", nativeQuery = true)    
+    @Query(value = "SELECT SUM(t.valor) FROM transferencia t WHERE nome_operador_transacao = :nome_operador_transacao", nativeQuery = true)    
+    BigDecimal calcularSaldoTransferenciasPorNomeOperadorTransacao(String nome_operador_transacao);
 }
